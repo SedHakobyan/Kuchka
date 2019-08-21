@@ -21,7 +21,7 @@ public class BetsManipulation {
 	
 	public static void main(String[] args) throws IOException  {
 		
-		String encoded = Base64.getEncoder().encodeToString(("SH932430:Gradus457!").getBytes("UTF-8"));
+		String encoded = Base64.getEncoder().encodeToString(("user:password").getBytes("UTF-8"));
 		try {
 			URL api = new URL("https://api.pinnacle.com/v1/fixtures/settled"); // https://api.pinnacle.com/v1/fixtures https://api.pinnacle.com/v1/odds
 			
