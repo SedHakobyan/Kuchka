@@ -1,0 +1,73 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Base64;
+import java.util.HashMap;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+public class BetsManipulation {
+
+	
+	
+	
+	
+	public static void main(String[] args) throws IOException  {
+		
+		String encoded = Base64.getEncoder().encodeToString(("SH932430:Gradus457!").getBytes("UTF-8"));
+		try {
+			URL api = new URL("https://api.pinnacle.com/v1/fixtures/settled"); // https://api.pinnacle.com/v1/fixtures https://api.pinnacle.com/v1/odds
+			
+			HttpURLConnection apiConnection = (HttpURLConnection) api.openConnection();
+			apiConnection.addRequestProperty("Authorization", "Basic " + encoded );
+			apiConnection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			apiConnection.setRequestProperty("Accept-Encoding", "gzip");
+			apiConnection.setRequestProperty("Accept", "application/json");
+			apiConnection.setRequestProperty("Accept-Charset", "UTF-8");
+		
+			
+		 if (apiConnection.getResponseCode()== 200){ 
+		 		BufferedReader br =new BufferedReader( new InputStreamReader(apiConnection.getInputStream()));
+					StringBuilder sb = new StringBuilder();
+					String line;
+					while ((line = br.readLine()) != null){
+						sb.append(line +"\n");
+					}
+					br.close();
+		 		
+					try {
+						JSONObject ret = new JSONObject(sb.toString());
+						System.out.println("data = "+ret.toString());
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		 
+		 
+			
+		} 
+		 
+		 
+		}
+		
+		catch (ConnectException e) {
+			e.printStackTrace();
+		}
+		
+		
+		 catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		}
+	
+
+}
